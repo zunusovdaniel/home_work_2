@@ -22,12 +22,10 @@ import org.w3c.dom.Text;
 public class SecondFragment extends Fragment {
     TextView th;
     ImageView imageView;
-
     final int PICK_IMAGE = 100;
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
 
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_second, container, false);
     }
@@ -35,20 +33,33 @@ public class SecondFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        th = view.findViewById(R.id.text);
-        imageView = view.findViewById(R.id.profile_image);
-        String result = getArguments().getString("key");
-        th.setText(result);
+        initView();
+        initText();
+        initClick();
+    }
 
+    private void initClick() {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent gallery = new Intent(Intent.ACTION_PICK,
-                        MediaStore.Images.Media.INTERNAL_CONTENT_URI);
-                startActivityForResult(gallery, PICK_IMAGE);
+                initIntent();
             }
         });
+    }
 
+    private void initIntent() {
+        Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+        startActivityForResult(gallery, PICK_IMAGE);
+    }
+
+    private void initText() {
+        String result = getArguments().getString("key");
+        th.setText(result);
+    }
+
+    private void initView() {
+        th = th.findViewById(R.id.text);
+        imageView = imageView.findViewById(R.id.profile_image);
     }
 
 }
